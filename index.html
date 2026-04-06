@@ -222,52 +222,53 @@
   </div>
 </section>
 
-<!-- ═══ RECORRIDO VIRTUAL – VIDEO ═══ -->
-<section class="video-section" id="recorrido" style="padding: clamp(2rem, 5vw, 6rem) 0;">
+<!-- ═══ RECORRIDO VIRTUAL ═══ -->
+<section class="video-section" id="recorrido" style="padding: clamp(2.5rem, 5vw, 5rem) 0;">
   <div class="container">
-    <div class="section-header" style="position:relative; z-index:1; margin-bottom:3rem;">
-      <span class="section-label fade-in" style="background:rgba(21,101,192,0.2); color:var(--blue-light); display:inline-block;">Recorrido Virtual</span>
+    <div class="section-header" style="position:relative;z-index:1;margin-bottom:2rem;">
+      <span class="section-label fade-in" style="background:rgba(21,101,192,0.2);color:var(--blue-light);display:inline-block;">Recorrido Virtual</span>
       <h2 class="section-title fade-in fade-in-delay-1" style="color:var(--white);">Conoce Nuestras Instalaciones</h2>
-      <p class="section-desc fade-in fade-in-delay-2" style="color:rgba(255,255,255,0.45);">Explora cada área del hospital desde donde estés. Haz clic en cualquier video para verlo.</p>
+      <p class="section-desc fade-in fade-in-delay-2" style="color:rgba(255,255,255,0.45);">Selecciona cualquier video para reproducirlo.</p>
       <div style="margin-top:1rem;" class="fade-in fade-in-delay-3">
-        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(211,47,47,0.15); border:1px solid rgba(211,47,47,0.3); border-radius:100px; padding:6px 16px;">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(211,47,47,0.15);border:1px solid rgba(211,47,47,0.3);border-radius:100px;padding:6px 16px;">
           <span style="width:8px;height:8px;background:#EF5350;border-radius:50%;animation:pulse-red 1.5s infinite;display:block;flex-shrink:0;"></span>
-          <span style="color:#EF9A9A; font-size:0.78rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;">Contamos con UCI · Adultos · Pediátrico · Neonatal</span>
+          <span style="color:#EF9A9A;font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;">UCI · Adultos · Pediátrico · Neonatal</span>
         </div>
       </div>
     </div>
 
-    <div class="video-layout">
-      <div class="video-player-wrap fade-in">
-        <div class="video-player-frame" style="position:relative; width:100%; padding-bottom:56.25%; height:0; overflow:hidden;">
-          <iframe id="mainVideoFrame"
-            src="https://www.youtube.com/embed/x-g8DHKuoIQ?rel=0&modestbranding=1&autoplay=1&mute=1"
-            title="Sala de Cirugía – Hospital San Ángel"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    <div style="display:grid;grid-template-columns:1fr 300px;gap:1.5rem;align-items:start;position:relative;z-index:1;" class="fade-in" id="homeVideoLayout">
+
+      <!-- PLAYER -->
+      <div>
+        <div id="homePlayerBox" style="position:relative;width:100%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 20px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.08);">
+          <iframe id="homeFrame" src=""
+            allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share"
             referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-            style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe>
+            allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;">
+          </iframe>
         </div>
-        <div style="margin-top:1.5rem;">
-          <div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;">
-            <span class="now-playing-dot"></span>
-            <span class="now-playing-text">Reproduciendo ahora</span>
+        <div style="margin-top:1rem;display:flex;align-items:center;gap:10px;">
+          <span style="width:9px;height:9px;background:var(--red);border-radius:50%;animation:pulse-red 1.5s infinite;flex-shrink:0;display:block;"></span>
+          <div>
+            <div style="font-size:.72rem;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.1em;">Reproduciendo ahora</div>
+            <div id="homeNowTitle" style="color:white;font-family:'Playfair Display',serif;font-size:.98rem;font-weight:700;margin-top:2px;"></div>
           </div>
-          <div class="now-playing-title" id="nowPlayingTitle">Sala de Cirugía</div>
-          <div id="nowPlayingDesc" style="color:rgba(255,255,255,0.4); font-size:0.85rem; margin-top:3px;">Quirófano equipado</div>
         </div>
-        <div style="margin-top:1.5rem;">
+        <div style="margin-top:1.2rem;">
           <a href="pages/recorrido.html" class="btn btn-outline btn-sm">Ver recorrido completo →</a>
         </div>
       </div>
 
-      <div class="fade-in fade-in-delay-1">
-        <div style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:space-between;">
-          <p style="color:rgba(255,255,255,0.4); font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; font-weight:600;">Lista de videos</p>
-          <p style="color:rgba(255,255,255,0.25); font-size:0.72rem; display:none;" class="mobile-scroll-hint">← Desliza →</p>
+      <!-- PLAYLIST -->
+      <div>
+        <div style="padding-bottom:.7rem;margin-bottom:.7rem;border-bottom:1px solid rgba(255,255,255,.07);">
+          <p style="color:rgba(255,255,255,.35);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;">Lista de videos</p>
         </div>
-        <div class="video-list" id="videoList" style="-webkit-overflow-scrolling:touch;"></div>
+        <div id="homePlaylist" style="display:flex;flex-direction:column;gap:.5rem;max-height:420px;overflow-y:auto;padding-right:3px;">
+        </div>
       </div>
+
     </div>
   </div>
 </section>
