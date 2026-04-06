@@ -2,188 +2,221 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recorrido Virtual – Hospital San Ángel Chimaltenango</title>
-  <meta name="description" content="Recorrido virtual del Hospital San Ángel. Quirófano, UCI, habitaciones, enfermería y más.">
   <link rel="stylesheet" href="../css/main.css">
   <style>
-    .videos-page { background: #0C1A2E; min-height: 100vh; }
+    body { background: #0C1A2E; }
+
     .vp-hero {
       background: #0C1A2E;
-      padding: 7rem 0 3rem;
-      text-align: center;
-      position: relative; overflow: hidden;
+      padding: clamp(5.5rem, 10vw, 7rem) 0 2rem;
+      text-align: center; position: relative; overflow: hidden;
     }
     .vp-hero::before {
-      content: '';
-      position: absolute; inset: 0;
+      content:''; position:absolute; inset:0;
       background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(21,101,192,0.15) 0%, transparent 70%);
     }
-    .vp-hero .section-label { background: rgba(21,101,192,0.2); color: var(--blue-light); display:inline-block; }
-    .vp-hero h1 { color: var(--white); }
-    .vp-hero p { color: rgba(255,255,255,0.55); max-width: 560px; margin: 0.8rem auto 0; font-size: 1rem; }
-    .breadcrumb { justify-content: center; }
+    .vp-hero h1 { color: white; }
+    .vp-hero p  { color: rgba(255,255,255,0.5); max-width:540px; margin:.8rem auto 0; }
+    .breadcrumb { justify-content:center; }
     .breadcrumb a { color: var(--blue-light); }
-    .breadcrumb span:not(:first-child) { color: rgba(255,255,255,0.4); }
+    .breadcrumb span { color: rgba(255,255,255,0.4); }
 
-    /* Video grid */
+    /* ── VIDEO GRID ── */
     .vgrid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 1.2rem;
     }
+
     .vcard {
-      display: block;
       border-radius: 14px;
       overflow: hidden;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
-      text-decoration: none;
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
     .vcard:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
       border-color: rgba(21,101,192,0.5);
       box-shadow: 0 12px 40px rgba(0,0,0,0.4);
     }
     .vcard-thumb {
       position: relative;
-      width: 100%;
-      padding-bottom: 56.25%;
-      background: #111;
-      overflow: hidden;
+      width: 100%; padding-bottom: 56.25%;
+      background: #111; overflow: hidden;
     }
     .vcard-thumb img {
-      position: absolute; top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-      transition: transform 0.4s ease;
+      position: absolute; top:0; left:0;
+      width:100%; height:100%; object-fit:cover;
+      transition: transform 0.4s;
     }
     .vcard:hover .vcard-thumb img { transform: scale(1.05); }
     .vcard-play {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(0,0,0,0.2);
+      position: absolute; inset:0;
+      display: flex; align-items:center; justify-content:center;
+      background: rgba(0,0,0,0.25);
       transition: background 0.3s;
     }
-    .vcard:hover .vcard-play { background: rgba(0,0,0,0.35); }
+    .vcard:hover .vcard-play { background: rgba(0,0,0,0.4); }
     .play-btn {
-      width: 52px; height: 52px;
-      border-radius: 50%;
-      background: rgba(255,0,0,0.92);
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(255,0,0,0.9);
+      display: flex; align-items:center; justify-content:center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
       transition: transform 0.2s;
     }
     .vcard:hover .play-btn { transform: scale(1.1); }
     .badge-uci {
-      position: absolute; top: 10px; left: 10px;
-      background: rgba(211,47,47,0.9);
-      color: white; border-radius: 100px;
-      padding: 3px 10px; font-size: 0.67rem;
-      font-weight: 700; letter-spacing: 0.06em;
+      position: absolute; top:10px; left:10px;
+      background: rgba(211,47,47,0.9); color:white;
+      border-radius:100px; padding:3px 10px;
+      font-size:0.67rem; font-weight:700; letter-spacing:0.06em;
     }
-    .badge-type {
-      position: absolute; top: 10px; right: 10px;
-      background: rgba(0,0,0,0.72);
-      color: white; border-radius: 6px;
-      padding: 3px 8px; font-size: 0.67rem; font-weight: 600;
+    .vcard-body { padding: 1rem; }
+    .vcard-body strong { display:block; color:white; font-size:0.9rem; font-weight:600; margin-bottom:3px; }
+    .vcard-body span   { color:rgba(255,255,255,0.45); font-size:0.78rem; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.92);
+      align-items: center; justify-content: center;
+      padding: 1rem;
     }
-    .vcard-body { padding: 1rem 1.1rem; }
-    .vcard-body strong {
-      display: block; color: white;
-      font-size: 0.92rem; font-weight: 600;
-      margin-bottom: 3px;
+    .modal-overlay.open { display: flex; }
+
+    .modal-box {
+      position: relative;
+      width: 100%; max-width: 700px;
+      animation: modalIn 0.25s ease;
     }
-    .vcard-body span {
-      color: rgba(255,255,255,0.45);
-      font-size: 0.78rem;
+    @keyframes modalIn {
+      from { opacity:0; transform:scale(0.93); }
+      to   { opacity:1; transform:scale(1); }
     }
+
+    .modal-close {
+      position: absolute; top: -44px; right: 0;
+      background: none; border: none;
+      color: white; font-size: 2rem; cursor: pointer;
+      line-height: 1; opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .modal-close:hover { opacity: 1; }
+
+    .modal-video {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.8);
+    }
+    .modal-video video {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 80vh;
+      background: #000;
+    }
+
+    .modal-info {
+      margin-top: 1rem;
+      display: flex; align-items:center; gap:10px;
+    }
+    .modal-dot {
+      width:8px; height:8px; border-radius:50%;
+      background:var(--red); animation:pulse-red 1.5s infinite; flex-shrink:0;
+    }
+    .modal-title { color:white; font-size:1rem; font-family:'Playfair Display',serif; font-weight:700; }
+    .modal-desc  { color:rgba(255,255,255,0.45); font-size:0.8rem; margin-top:2px; }
 
     @media (max-width: 600px) {
       .vgrid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-      .vcard-body { padding: 0.7rem 0.8rem; }
+      .vcard-body { padding: 0.7rem; }
       .vcard-body strong { font-size: 0.8rem; }
-      .play-btn { width: 36px; height: 36px; }
+      .play-btn { width: 38px; height: 38px; }
       .play-btn svg { width: 14px; height: 14px; }
     }
   </style>
 </head>
-<body class="videos-page">
-
+<body>
 <div id="header-root"></div>
 
 <section class="vp-hero">
   <div class="container" style="position:relative;z-index:1;">
     <div class="breadcrumb fade-in">
-      <a href="../index.html">Inicio</a>
-      <span>›</span>
-      <span>Recorrido Virtual</span>
+      <a href="../index.html">Inicio</a><span>›</span><span>Recorrido Virtual</span>
     </div>
-    <div class="section-label fade-in" style="margin:1rem auto 0.8rem;">Recorrido Virtual</div>
+    <div class="section-label fade-in" style="background:rgba(21,101,192,.2);color:var(--blue-light);display:inline-block;margin:1rem auto .8rem;">Recorrido Virtual</div>
     <h1 class="fade-in fade-in-delay-1">Conoce Nuestras Instalaciones</h1>
-    <p class="fade-in fade-in-delay-2">Toca cualquier video para verlo directamente en YouTube.</p>
-    <div style="margin-top:1.2rem;" class="fade-in fade-in-delay-3">
-      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(211,47,47,0.15);border:1px solid rgba(211,47,47,0.3);border-radius:100px;padding:6px 16px;">
+    <p class="fade-in fade-in-delay-2">Toca cualquier video para reproducirlo.</p>
+    <div style="margin-top:1rem;" class="fade-in fade-in-delay-3">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(211,47,47,.15);border:1px solid rgba(211,47,47,.3);border-radius:100px;padding:6px 16px;">
         <span style="width:8px;height:8px;background:#EF5350;border-radius:50%;animation:pulse-red 1.5s infinite;display:block;flex-shrink:0;"></span>
-        <span style="color:#EF9A9A;font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;">UCI · Adultos · Pediátrico · Neonatal</span>
+        <span style="color:#EF9A9A;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;">UCI · Adultos · Pediátrico · Neonatal</span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- VIDEO GRID -->
-<section style="background:#0C1A2E; padding:2rem 0 4rem;">
+<section style="background:#0C1A2E;padding:1rem 0 4rem;">
   <div class="container">
     <div class="vgrid fade-in" id="videoGrid"></div>
   </div>
 </section>
 
-<!-- UCI SECTION -->
-<section style="background:#0C1A2E; padding:3rem 0 4rem; border-top:1px solid rgba(255,255,255,0.05);">
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-video">
+      <video id="modalVideo" controls playsinline preload="none">
+        <source id="modalSource" src="" type="video/mp4">
+      </video>
+    </div>
+    <div class="modal-info">
+      <span class="modal-dot"></span>
+      <div>
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-desc"  id="modalDesc"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UCI -->
+<section style="background:#0A1628;padding:3rem 0;border-top:1px solid rgba(255,255,255,.05);">
   <div class="container">
-    <div style="text-align:center; margin-bottom:2rem;">
-      <h2 style="color:white; font-size:1.6rem;">Nuestras Unidades de Cuidado Intensivo</h2>
-      <p style="color:rgba(255,255,255,0.45); margin-top:0.5rem; font-size:0.9rem;">Monitoreo constante las 24 horas del día</p>
-    </div>
-    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.2rem;" class="fade-in">
-      <div style="background:rgba(211,47,47,0.08);border:1px solid rgba(211,47,47,0.2);border-radius:14px;overflow:hidden;">
-        <div style="height:180px;overflow:hidden;">
-          <img src="../assets/fotos/intensivo-1.jpg" alt="UCI Adultos"
-               style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;"
-               onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
-        </div>
-        <div style="padding:1.2rem;">
-          <h4 style="color:white;margin-bottom:0.4rem;">🧑‍⚕️ UCI Adultos</h4>
-          <p style="font-size:0.82rem;color:rgba(255,255,255,0.45);line-height:1.6;">Cubículos individuales con monitoreo constante y personal médico especializado.</p>
+    <h2 style="color:white;text-align:center;font-size:1.5rem;margin-bottom:1.8rem;">Nuestras Áreas Intensivas</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,260px));gap:1.2rem;justify-content:center;max-width:900px;margin:0 auto;" class="fade-in">
+      <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(211,47,47,.2);">
+        <div style="height:160px;overflow:hidden;"><img src="../assets/fotos/intensivo-1.jpg" alt="UCI Adultos" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div style="padding:1rem;background:rgba(211,47,47,.07);">
+          <h4 style="color:white;margin-bottom:.35rem;">🧑‍⚕️ Intensivo Adultos</h4>
+          <p style="font-size:.8rem;color:rgba(255,255,255,.42);line-height:1.55;">Cubículos individuales con monitoreo constante.</p>
         </div>
       </div>
-      <div style="background:rgba(211,47,47,0.08);border:1px solid rgba(211,47,47,0.2);border-radius:14px;overflow:hidden;">
-        <div style="height:180px;overflow:hidden;">
-          <img src="../assets/fotos/intensivo-2.jpg" alt="UCI Pediátrica"
-               style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;"
-               onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
-        </div>
-        <div style="padding:1.2rem;">
-          <h4 style="color:white;margin-bottom:0.4rem;">👧 UCI Pediátrica</h4>
-          <p style="font-size:0.82rem;color:rgba(255,255,255,0.45);line-height:1.6;">Unidad especializada para niños con atención pediátrica disponible 24 horas.</p>
+      <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(211,47,47,.2);">
+        <div style="height:160px;overflow:hidden;"><img src="../assets/fotos/intensivo-2.jpg" alt="UCI Pediátrica" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div style="padding:1rem;background:rgba(211,47,47,.07);">
+          <h4 style="color:white;margin-bottom:.35rem;">👧 Intensivo Pediátrico</h4>
+          <p style="font-size:.8rem;color:rgba(255,255,255,.42);line-height:1.55;">Unidad especializada para niños, disponible 24 horas.</p>
         </div>
       </div>
-      <div style="background:rgba(211,47,47,0.08);border:1px solid rgba(211,47,47,0.2);border-radius:14px;overflow:hidden;">
-        <div style="height:180px;overflow:hidden;">
-          <img src="../assets/fotos/incuvadora-neonatal.jpg" alt="UCI Neonatal"
-               style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;"
-               onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
-        </div>
-        <div style="padding:1.2rem;">
-          <h4 style="color:white;margin-bottom:0.4rem;">👶 UCI Neonatal</h4>
-          <p style="font-size:0.82rem;color:rgba(255,255,255,0.45);line-height:1.6;">Incubadoras modernas para el cuidado de recién nacidos que requieren atención intensiva.</p>
+      <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(211,47,47,.2);">
+        <div style="height:160px;overflow:hidden;"><img src="../assets/fotos/incuvadora-neonatal.jpg" alt="UCI Neonatal" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div style="padding:1rem;background:rgba(211,47,47,.07);">
+          <h4 style="color:white;margin-bottom:.35rem;">👶 Intensivo Neonatal</h4>
+          <p style="font-size:.8rem;color:rgba(255,255,255,.42);line-height:1.55;">Incubadoras modernas para recién nacidos.</p>
         </div>
       </div>
     </div>
-    <div style="text-align:center;margin-top:2.5rem;" class="fade-in">
+    <div style="text-align:center;margin-top:2rem;">
       <a href="tel:51219282" class="btn btn-red btn-lg">🚨 Emergencias 24h — 5121-9282</a>
     </div>
   </div>
@@ -191,42 +224,80 @@
 
 <div id="footer-root"></div>
 <div id="chatbot-root"></div>
-
 <script src="../js/components.js"></script>
 <script src="../js/main.js"></script>
 <script>
-  document.getElementById('header-root').innerHTML = renderHeader('instalaciones');
-  document.getElementById('footer-root').innerHTML = renderFooter(true);
-  document.getElementById('chatbot-root').innerHTML = renderChatbot();
+document.getElementById('header-root').innerHTML = renderHeader('instalaciones');
+document.getElementById('footer-root').innerHTML = renderFooter(true);
+document.getElementById('chatbot-root').innerHTML = renderChatbot();
 
-  const VIDEOS = [
-    { id:'x-g8DHKuoIQ', title:'Sala de Cirugía', desc:'Quirófano equipado', uci:false, isShort:false, url:'https://youtu.be/x-g8DHKuoIQ' },
-    { id:'V4IQIAW1RAo', title:'Cuartos, Pasillos y Elevador', desc:'Recorrido interior', uci:false, isShort:true, url:'https://youtube.com/shorts/V4IQIAW1RAo' },
-    { id:'tFEO3rXBIng', title:'Baños', desc:'Higiene y confort', uci:false, isShort:true, url:'https://youtube.com/shorts/tFEO3rXBIng' },
-    { id:'5hyaWnWbstU', title:'Unidad Intensiva (UCI)', desc:'Cuidados críticos 24h', uci:true, isShort:true, url:'https://youtube.com/shorts/5hyaWnWbstU' },
-    { id:'1SQeuFLvvTU', title:'Enfermería y Elevador', desc:'Estación de enfermeros', uci:false, isShort:true, url:'https://youtube.com/shorts/1SQeuFLvvTU' },
-    { id:'14rX8thb6tw', title:'Habitación Privada', desc:'Confort y privacidad', uci:false, isShort:true, url:'https://youtube.com/shorts/14rX8thb6tw' },
-    { id:'GRaelYVuV08', title:'Incubadoras — UCI Neonatal', desc:'Cuidado neonatal especializado', uci:true, isShort:true, url:'https://youtube.com/shorts/GRaelYVuV08' }
-  ];
+const VIDEOS = [
+  { src:'../assets/videos/cirugia.mp4',     title:'Sala de Cirugía',             desc:'Quirófano equipado',            poster:'../assets/fotos/cirugia-1.jpg',          uci:false },
+  { src:'../assets/videos/pasillos.mp4',    title:'Cuartos, Pasillos y Elevador', desc:'Recorrido interior',            poster:'../assets/fotos/pasillos.jpg',           uci:false },
+  { src:'../assets/videos/banos.mp4',       title:'Baños',                        desc:'Higiene y confort',             poster:'../assets/fotos/bano.jpg',               uci:false },
+  { src:'../assets/videos/intensivo.mp4',   title:'Unidad Intensiva (UCI)',        desc:'Cuidados críticos 24h',         poster:'../assets/fotos/intensivo-1.jpg',        uci:true  },
+  { src:'../assets/videos/enfermeria.mp4',  title:'Enfermería y Elevador',         desc:'Estación de enfermeros',        poster:'../assets/fotos/area-de-enfermeros.jpg', uci:false },
+  { src:'../assets/videos/habitacion.mp4',  title:'Habitación Privada',            desc:'Confort y privacidad',          poster:'../assets/fotos/habitacion-privada.jpg', uci:false },
+  { src:'../assets/videos/incubadoras.mp4', title:'Incubadoras — UCI Neonatal',    desc:'Cuidado neonatal especializado',poster:'../assets/fotos/incuvadora-neonatal.jpg',uci:true  }
+];
 
-  document.getElementById('videoGrid').innerHTML = VIDEOS.map(v => `
-    <a class="vcard" href="${v.url}" target="_blank" rel="noopener" aria-label="Ver ${v.title} en YouTube">
-      <div class="vcard-thumb">
-        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="${v.title}" loading="lazy">
-        <div class="vcard-play">
-          <div class="play-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-          </div>
+// Build grid
+document.getElementById('videoGrid').innerHTML = VIDEOS.map((v,i) => `
+  <div class="vcard" onclick="openModal(${i})">
+    <div class="vcard-thumb">
+      <img src="${v.poster}" alt="${v.title}" loading="lazy">
+      <div class="vcard-play">
+        <div class="play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
         </div>
-        ${v.uci ? '<span class="badge-uci">🔴 UCI</span>' : ''}
-        <span class="badge-type">${v.isShort ? '▶ Short' : '▶ Video'}</span>
       </div>
-      <div class="vcard-body">
-        <strong>${v.title}</strong>
-        <span>${v.desc}</span>
-      </div>
-    </a>
-  `).join('');
+      ${v.uci ? '<span class="badge-uci">🔴 Intensivo</span>' : ''}
+    </div>
+    <div class="vcard-body">
+      <strong>${v.title}</strong>
+      <span>${v.desc}</span>
+    </div>
+  </div>
+`).join('');
+
+// Modal
+const overlay  = document.getElementById('modalOverlay');
+const videoEl  = document.getElementById('modalVideo');
+const sourceEl = document.getElementById('modalSource');
+const titleEl  = document.getElementById('modalTitle');
+const descEl   = document.getElementById('modalDesc');
+
+function openModal(i) {
+  const v = VIDEOS[i];
+  // Pause first, reset, then load new src
+  videoEl.pause();
+  videoEl.removeAttribute('src');
+  sourceEl.setAttribute('src', v.src);
+  videoEl.poster = v.poster;
+  videoEl.load();
+  titleEl.textContent = v.title;
+  descEl.textContent  = v.desc;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Play after load
+  videoEl.addEventListener('canplay', function onCanPlay() {
+    videoEl.play().catch(()=>{});
+    videoEl.removeEventListener('canplay', onCanPlay);
+  });
+}
+
+function closeModal(e) {
+  if (e && e.target !== overlay) return;
+  videoEl.pause();
+  videoEl.removeAttribute('src');
+  sourceEl.removeAttribute('src');
+  videoEl.load(); // Reset internal state
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close with Escape key
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
 </html>
