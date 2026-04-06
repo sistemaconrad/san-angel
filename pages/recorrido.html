@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recorrido Virtual – Hospital San Ángel Chimaltenango</title>
+  <meta name="description" content="Conoce las instalaciones del Hospital San Ángel con nuestro recorrido virtual en video. Quirófano, UCI, habitaciones privadas, enfermería y más.">
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    .videos-page { background: #0C1A2E; min-height: 100vh; }
+    .vp-hero {
+      background: #0C1A2E;
+      padding: 8rem 0 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .vp-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(21,101,192,0.15) 0%, transparent 70%);
+    }
+    .vp-hero .section-label { background: rgba(21,101,192,0.2); color: var(--blue-light); }
+    .vp-hero h1 { color: var(--white); }
+    .vp-hero p { color: rgba(255,255,255,0.55); max-width: 600px; margin: 1rem auto 0; font-size: 1.05rem; }
+    .breadcrumb a { color: var(--blue-light); }
+    .breadcrumb { justify-content: center; }
+  </style>
+</head>
+<body class="videos-page">
+
+<div id="header-root" style="--header-bg: rgba(12,26,46,0.95);"></div>
+
+<section class="vp-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="breadcrumb fade-in">
+      <a href="../index.html">Inicio</a>
+      <span style="color:rgba(255,255,255,0.3);">›</span>
+      <span style="color:rgba(255,255,255,0.5);">Recorrido Virtual</span>
+    </div>
+    <div class="section-label fade-in" style="display:inline-block; margin:1rem auto 1rem;">Recorrido Virtual</div>
+    <h1 class="fade-in fade-in-delay-1">Conoce Nuestras Instalaciones</h1>
+    <p class="fade-in fade-in-delay-2">Explora cada área del hospital desde donde estés. Haz clic en cualquier video para verlo.</p>
+    
+    <!-- UCI BADGE DESTACADO -->
+    <div style="margin-top:1.5rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;" class="fade-in fade-in-delay-3">
+      <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(211,47,47,0.15); border:1px solid rgba(211,47,47,0.3); border-radius:100px; padding:8px 18px;">
+        <span style="width:8px;height:8px;background:#EF5350;border-radius:50%;animation:pulse-red 1.5s infinite;display:block;flex-shrink:0;"></span>
+        <span style="color:#EF9A9A; font-size:0.8rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;">UCI Disponible · Adultos · Pediátrico · Neonatal</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO GALLERY SECTION -->
+<section class="video-section" style="padding-top:2rem;">
+  <div class="container">
+    <div class="video-layout">
+      <!-- PLAYER -->
+      <div class="video-player-wrap fade-in">
+        <div class="video-player-frame">
+          <iframe
+            id="mainVideoFrame"
+            src="https://www.youtube.com/embed/x-g8DHKuoIQ?rel=0&modestbranding=1&autoplay=1&mute=1"
+            title="Sala de Cirugía – Hospital San Ángel"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-now-playing" style="margin-top:1.5rem;">
+          <div>
+            <div class="now-playing-text" style="display:flex;align-items:center;gap:8px;">
+              <span class="now-playing-dot"></span>
+              Reproduciendo ahora
+            </div>
+            <div class="now-playing-title" id="nowPlayingTitle">Sala de Cirugía</div>
+            <div id="nowPlayingDesc" style="color:rgba(255,255,255,0.4); font-size:0.85rem; margin-top:3px;">Quirófano equipado</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLAYLIST -->
+      <div class="fade-in fade-in-delay-1">
+        <div style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.06);">
+          <h3 style="color:white; font-size:1rem; font-family:'DM Sans',sans-serif; font-weight:600; letter-spacing:0.02em; text-transform:uppercase; color:rgba(255,255,255,0.5); font-size:0.8rem; letter-spacing:0.12em;">Lista de videos</h3>
+        </div>
+        <div class="video-list" id="videoList">
+          <!-- Videos insertados por JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEXTO SOBRE UCI INTENSIVOS -->
+<section style="background:#0C1A2E; padding:4rem 0; border-top:1px solid rgba(255,255,255,0.05);">
+  <div class="container">
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem;" class="fade-in">
+
+      <!-- UCI ADULTOS -->
+      <div style="background:rgba(211,47,47,0.08); border:1px solid rgba(211,47,47,0.2); border-radius:var(--radius-lg); overflow:hidden;">
+        <div style="height:200px; overflow:hidden; position:relative;">
+          <img src="../assets/fotos/intensivo-1.jpg" alt="UCI Adultos"
+               style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s ease;"
+               onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;top:10px;left:10px;background:rgba(211,47,47,0.85);color:white;border-radius:100px;padding:3px 12px;font-size:0.7rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">🔴 UCI</div>
+        </div>
+        <div style="padding:1.5rem;">
+          <h4 style="color:white; margin-bottom:0.5rem;">🧑‍⚕️ UCI Adultos</h4>
+          <p style="font-size:0.85rem; color:rgba(255,255,255,0.5); line-height:1.6;">Cubículos individuales con monitoreo constante y personal médico especializado.</p>
+        </div>
+      </div>
+
+      <!-- UCI PEDIÁTRICA -->
+      <div style="background:rgba(211,47,47,0.08); border:1px solid rgba(211,47,47,0.2); border-radius:var(--radius-lg); overflow:hidden;">
+        <div style="height:200px; overflow:hidden; position:relative;">
+          <img src="../assets/fotos/intensivo-2.jpg" alt="UCI Pediátrica"
+               style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s ease;"
+               onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;top:10px;left:10px;background:rgba(211,47,47,0.85);color:white;border-radius:100px;padding:3px 12px;font-size:0.7rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">🔴 UCI</div>
+        </div>
+        <div style="padding:1.5rem;">
+          <h4 style="color:white; margin-bottom:0.5rem;">👧 UCI Pediátrica</h4>
+          <p style="font-size:0.85rem; color:rgba(255,255,255,0.5); line-height:1.6;">Unidad especializada para niños con atención médica pediátrica disponible 24 horas.</p>
+        </div>
+      </div>
+
+      <!-- UCI NEONATAL -->
+      <div style="background:rgba(211,47,47,0.08); border:1px solid rgba(211,47,47,0.2); border-radius:var(--radius-lg); overflow:hidden;">
+        <div style="height:200px; overflow:hidden; position:relative;">
+          <img src="../assets/fotos/incuvadora-neonatal.jpg" alt="UCI Neonatal"
+               style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s ease;"
+               onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;top:10px;left:10px;background:rgba(211,47,47,0.85);color:white;border-radius:100px;padding:3px 12px;font-size:0.7rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">🔴 UCI</div>
+        </div>
+        <div style="padding:1.5rem;">
+          <h4 style="color:white; margin-bottom:0.5rem;">👶 UCI Neonatal</h4>
+          <p style="font-size:0.85rem; color:rgba(255,255,255,0.5); line-height:1.6;">Incubadoras y equipos avanzados para el cuidado de recién nacidos que requieren atención intensiva.</p>
+        </div>
+      </div>
+
+    </div>
+    <div style="text-align:center; margin-top:2.5rem;" class="fade-in">
+      <a href="tel:51219282" class="btn btn-red btn-lg">🚨 Emergencias 24h — 5121-9282</a>
+    </div>
+  </div>
+</section>
+
+<div id="footer-root"></div>
+<div id="chatbot-root"></div>
+
+<script src="../js/components.js"></script>
+<script src="../js/main.js"></script>
+<script>
+  document.getElementById('header-root').innerHTML = renderHeader('instalaciones');
+  document.getElementById('footer-root').innerHTML = renderFooter(true);
+  document.getElementById('chatbot-root').innerHTML = renderChatbot();
+
+  // ─── VIDEO DATA ───
+  const VIDEOS = [
+    {
+      id: 'x-g8DHKuoIQ',
+      embedId: 'x-g8DHKuoIQ',
+      title: 'Sala de Cirugía',
+      desc: 'Quirófano equipado',
+      icon: '⚕️',
+      isShort: false,
+      uci: false
+    },
+    {
+      id: 'V4IQIAW1RAo',
+      embedId: 'V4IQIAW1RAo',
+      title: 'Cuartos, Pasillos y Elevador',
+      desc: 'Recorrido interior',
+      icon: '🛗',
+      isShort: true,
+      uci: false
+    },
+    {
+      id: 'tFEO3rXBIng',
+      embedId: 'tFEO3rXBIng',
+      title: 'Baños',
+      desc: 'Higiene y confort',
+      icon: '🚿',
+      isShort: true,
+      uci: false
+    },
+    {
+      id: '5hyaWnWbstU',
+      embedId: '5hyaWnWbstU',
+      title: 'Unidad Intensiva (UCI)',
+      desc: 'Cuidados críticos 24h',
+      icon: '🏥',
+      isShort: true,
+      uci: true
+    },
+    {
+      id: '1SQeuFLvvTU',
+      embedId: '1SQeuFLvvTU',
+      title: 'Enfermería y Elevador',
+      desc: 'Estación de enfermeros',
+      icon: '👩‍⚕️',
+      isShort: true,
+      uci: false
+    },
+    {
+      id: '14rX8thb6tw',
+      embedId: '14rX8thb6tw',
+      title: 'Habitación Privada',
+      desc: 'Confort y privacidad',
+      icon: '🛏️',
+      isShort: true,
+      uci: false
+    },
+    {
+      id: 'GRaelYVuV08',
+      embedId: 'GRaelYVuV08',
+      title: 'Incubadoras — UCI Neonatal',
+      desc: 'Cuidado neonatal especializado',
+      icon: '👶',
+      isShort: true,
+      uci: true
+    }
+  ];
+
+  let currentVideo = 0;
+
+  function getEmbedUrl(video) {
+    const base = video.isShort
+      ? `https://www.youtube.com/embed/${video.embedId}?rel=0&modestbranding=1`
+      : `https://www.youtube.com/embed/${video.embedId}?rel=0&modestbranding=1&autoplay=1&mute=1`;
+    return base;
+  }
+
+  function getThumbnailUrl(id) {
+    return `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+  }
+
+  function selectVideo(index) {
+    const v = VIDEOS[index];
+    currentVideo = index;
+
+    // Update iframe
+    const frame = document.getElementById('mainVideoFrame');
+    frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    frame.src = getEmbedUrl(v);
+
+    // Update now playing
+    document.getElementById('nowPlayingTitle').textContent = v.title;
+    document.getElementById('nowPlayingDesc').textContent = v.desc;
+
+    // Update active class
+    document.querySelectorAll('.video-item').forEach((el, i) => {
+      el.classList.toggle('active', i === index);
+    });
+
+    // Scroll to top on mobile
+    if (window.innerWidth < 1024) {
+      document.querySelector('.video-player-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function buildPlaylist() {
+    const list = document.getElementById('videoList');
+    list.innerHTML = VIDEOS.map((v, i) => `
+      <div class="video-item ${i === 0 ? 'active' : ''}" onclick="selectVideo(${i})">
+        <div class="video-thumb">
+          <img src="${getThumbnailUrl(v.id)}" alt="${v.title}" 
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+               loading="lazy">
+          <div class="video-thumb-placeholder" style="display:none;">${v.icon}</div>
+          <div class="video-play-icon">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="video-info">
+          <strong>${v.title}</strong>
+          <span>${v.desc}</span>
+          ${v.uci ? '<div class="uci-badge" style="margin-top:4px; font-size:0.68rem; padding:2px 8px;">🔴 UCI</div>' : ''}
+        </div>
+        <span class="video-num">${String(i + 1).padStart(2, '0')}</span>
+      </div>
+    `).join('');
+  }
+
+  buildPlaylist();
+</script>
+</body>
+</html>
